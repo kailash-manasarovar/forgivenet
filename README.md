@@ -17,4 +17,4 @@ The request for forgiveness contract: <a href="https://etherscan.io/address/0x01
 
 ## More information
 
-Find out more about forgivenet<sup>TM</sup> <a href="https://forgivenet.co.uk">here</a>.
+Find out more about <a href="https://forgivenet.co.uk">forgivenet<sup>TM</sup></a>.
