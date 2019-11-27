@@ -1,2 +1,6 @@
 # Default ignored files
 /workspace.xml
+.DS_Store
+.idea/request-for-forgiveness.iml
+.idea/vcs.xml
+
