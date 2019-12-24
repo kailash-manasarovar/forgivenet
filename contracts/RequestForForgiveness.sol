@@ -76,12 +76,13 @@ contract RequestForForgiveness is Owned {
         token = ERC20TokenInterface(ercTokenAddress);
     }
 
+    /* do this in the token contract with transfer
     // Owner deposits token into the contract
     function depositToken(uint256 amount) public onlyOwner {
         token = ERC20TokenInterface(token);
         require(token.transferFrom(msg.sender, address(this), amount) == true);
     }
-
+    */
 
 
     // A minimum value for a request for forgiveness transaction may disincentivize bad behaviour
@@ -102,15 +103,15 @@ contract RequestForForgiveness is Owned {
 
         uint256 length = bytes(forgiveness_request).length;
         require(length > 500 && length < 2000);
-        string memory requestStr = forgiveness_request;
+        //string memory requestStr = forgiveness_request;
 
         require(msg.sender != address(0));
         require(msg.value > disincentive);
         receivingAccount.transfer(msg.value);
-        withdrawToken(msg.sender, msg.value, requestStr);
+        // withdrawToken(msg.sender, msg.value, requestStr);
     }
 
-
+    /*
     // Send 1 FRGVN token to recipient
     function withdrawToken(address recipient, uint256 amount, string memory requestString) internal {
         // placeholder variable for request
@@ -118,9 +119,11 @@ contract RequestForForgiveness is Owned {
         require(recipient != address(0));
         require(bytes(data).length > 0);
         token = ERC20TokenInterface(token);
-        require(token.transfer(recipient, 1) == true);
+        require(token.transfer(recipient, 1000000000000000000) == true);
         emit RequestMade(recipient, data, amount, now);
     }
+    */
+
 
     // events
     event RequestMade(address indexed from, string data, uint256 donation, uint256 timestamp);
