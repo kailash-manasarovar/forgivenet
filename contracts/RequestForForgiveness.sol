@@ -1,7 +1,3 @@
-/**
- *Submitted for verification at Etherscan.io on 2019-11-26
-*/
-
 pragma solidity ^0.5.11;
 
 // ----------------------------------------------------------------------------
@@ -12,6 +8,25 @@ pragma solidity ^0.5.11;
 //
 // (c) Nandi Niramisa & Co Limited 2019. The MIT Licence. https://opensource.org/licenses/MIT
 // ----------------------------------------------------------------------------
+
+
+contract ReentrancyGuard {
+    bool private _notEntered;
+
+    constructor () internal {
+        _notEntered = true;
+    }
+
+    modifier nonReentrant() {
+        // On the first call to nonReentrant, _notEntered will be true
+        require(_notEntered, "ReentrancyGuard: reentrant call");
+        // Any calls to nonReentrant after this point will fail
+        _notEntered = false;
+        _;
+        _notEntered = true;
+    }
+}
+
 
 
 contract Owned {
@@ -57,7 +72,7 @@ contract ERC20TokenInterface {
 
 
 
-contract RequestForForgiveness is Owned {
+contract RequestForForgiveness is Owned, ReentrancyGuard {
 
     ERC20TokenInterface private token;
 
@@ -76,13 +91,6 @@ contract RequestForForgiveness is Owned {
         token = ERC20TokenInterface(ercTokenAddress);
     }
 
-    /* do this in the token contract with transfer
-    // Owner deposits token into the contract
-    function depositToken(uint256 amount) public onlyOwner {
-        token = ERC20TokenInterface(token);
-        require(token.transferFrom(msg.sender, address(this), amount) == true);
-    }
-    */
 
 
     // A minimum value for a request for forgiveness transaction may disincentivize bad behaviour
@@ -99,19 +107,17 @@ contract RequestForForgiveness is Owned {
 
 
     // Make Ether payment into receiving account and call withdrawToken with the request
-    function requestForgiveness(string memory forgiveness_request) public payable {
+    function requestForgiveness(string memory forgiveness_request) public payable nonReentrant {
 
         uint256 length = bytes(forgiveness_request).length;
         require(length > 500 && length < 2000);
-        //string memory requestStr = forgiveness_request;
-
         require(msg.sender != address(0));
         require(msg.value > disincentive);
         receivingAccount.transfer(msg.value);
-        // withdrawToken(msg.sender, msg.value, requestStr);
+        withdrawToken(msg.sender, msg.value, forgiveness_request);
     }
 
-    /*
+
     // Send 1 FRGVN token to recipient
     function withdrawToken(address recipient, uint256 amount, string memory requestString) internal {
         // placeholder variable for request
@@ -122,8 +128,6 @@ contract RequestForForgiveness is Owned {
         require(token.transfer(recipient, 1000000000000000000) == true);
         emit RequestMade(recipient, data, amount, now);
     }
-    */
-
 
     // events
     event RequestMade(address indexed from, string data, uint256 donation, uint256 timestamp);
