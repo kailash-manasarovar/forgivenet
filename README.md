@@ -1,4 +1,4 @@
-# forgivenet<sup>TM</sup>
+# forgivenet® 
 
 forgivenet<sup>TM</sup> is a company building distributed smart contract applications on the Ethereum network.
 
