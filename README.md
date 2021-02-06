@@ -1,4 +1,4 @@
-# forgivenet® 
+# forgivenet
 
 forgivenet<sup>TM</sup> is a company building distributed smart contract applications on the Ethereum network.
 
@@ -15,4 +15,4 @@ The FRGVN token contract: <a href="https://etherscan.io/address/0x9d29f93e0a4c0b
 
 ## More information
 
-Find out more about <a href="https://forgivenet.co.uk">forgivenet<sup>TM</sup></a>.
+Find out more about <a href="https://forgivenet.co.uk">forgivenet®</a>.
